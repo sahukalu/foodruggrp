@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FoodRush — Project Presentation | GCET Berhampur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --or:#F97316;--or2:#EA580C;--or-dim:rgba(249,115,22,.13);
+  --dk:#0D0D18;--dk2:#12121F;--dk3:#1B1B2C;
+  --sl:#252535;--bd:#2D2D45;
+  --tx:#EEEEF8;--tx2:#9898B8;
+  --wh:#FFFFFF;
+  --gr:#22C55E;--bl:#3B82F6;--pu:#A855F7;
+  --sh:0 8px 40px rgba(0,0,0,.55);
+  --ff-head:'Playfair Display',serif;
+  --ff-body:'DM Sans',sans-serif;
+  --ff-mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff-body);background:var(--dk);color:var(--tx);line-height:1.6;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+/* ══════════════════════════════
+   TOP STRIP — College + Badge
+══════════════════════════════ */
+.top-strip{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 40px;
+  border-bottom:1px solid var(--bd);
+  background:rgba(13,13,24,.9);
+  backdrop-filter:blur(14px);
+  position:sticky;top:0;z-index:200;
+  gap:16px;flex-wrap:wrap;
+}
+.college-brand{display:flex;align-items:center;gap:14px}
+.college-logo{
+  width:80px;height:80px;border-radius:10px;
+  object-fit:contain;background:#fff;padding:4px;
+  box-shadow:0 0 0 2px var(--or);flex-shrink:0;
+}
+.college-logo-ph{
+  width:54px;height:54px;border-radius:10px;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:26px;box-shadow:0 0 0 2px var(--or);flex-shrink:0;display:none;
+}
+.college-info h1{font-family:var(--ff-head);font-size:13.5px;color:var(--wh);line-height:1.2}
+.college-info p{font-size:11px;color:var(--tx2);margin-top:2px}
+.proj-badge{
+  display:flex;align-items:center;gap:9px;
+  background:var(--or-dim);border:1px solid rgba(249,115,22,.3);
+  padding:7px 16px;border-radius:40px;flex-shrink:0;
+}
+.proj-badge span{font-size:12px;font-weight:600;color:var(--or);letter-spacing:.4px}
+
+/* ══════════════════════════════
+   HERO SECTION
+══════════════════════════════ */
+.hero{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -5%,rgba(249,115,22,.16) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 50% at 85% 85%,rgba(168,85,247,.09) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 40% at 10% 70%,rgba(59,130,246,.07) 0%,transparent 50%),
+    var(--dk);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:80px 40px 60px;
+  position:relative;overflow:hidden;text-align:center;
+}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.25);
+  padding:6px 20px;border-radius:30px;margin-bottom:30px;
+  font-size:12px;font-weight:600;color:var(--or);letter-spacing:1px;text-transform:uppercase;
+  animation:fadeUp .8s ease both;
+}
+
+.hero-welcome{
+  font-family:var(--ff-body);font-size:clamp(13px,1.6vw,17px);
+  font-weight:500;color:var(--tx2);letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:16px;animation:fadeUp .8s .1s ease both;
+}
+
+.hero-title{
+  font-family:var(--ff-head);
+  font-size:clamp(62px,10vw,112px);
+  font-weight:900;line-height:.92;letter-spacing:-3px;
+  margin-bottom:8px;animation:fadeUp .9s .15s ease both;
+}
+.hero-title .w1{color:var(--wh)}
+.hero-title .w2{color:transparent;-webkit-text-stroke:2.5px var(--or)}
+
+.hero-tagline{
+  font-family:var(--ff-head);font-style:italic;
+  font-size:clamp(15px,2vw,22px);color:var(--or);
+  margin:10px 0 22px;animation:fadeUp .8s .25s ease both;
+  letter-spacing:.5px;
+}
+
+.hero-sub{
+  font-size:clamp(14px,1.5vw,17px);color:var(--tx2);
+  max-width:560px;margin:0 auto 40px;line-height:1.75;
+  animation:fadeUp .8s .35s ease both;
+}
+
+.hero-cta-row{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .8s .45s ease both;margin-bottom:0;
+}
+.btn-or{
+  background:var(--or);color:#fff;font-size:14px;font-weight:600;
+  padding:13px 30px;border-radius:40px;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 6px 28px rgba(249,115,22,.35);
+  transition:transform .2s,box-shadow .2s;text-decoration:none;
+}
+.btn-or:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(249,115,22,.45)}
+.btn-ghost{
+  background:transparent;color:var(--tx);font-size:14px;font-weight:600;
+  padding:13px 30px;border-radius:40px;border:1.5px solid var(--bd);cursor:pointer;
+  transition:border-color .2s,color .2s;text-decoration:none;
+}
+.btn-ghost:hover{border-color:var(--or);color:var(--or)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════
+   DIVIDER
+══════════════════════════════ */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);margin:0 40px}
+
+/* ══════════════════════════════
+   SECTIONS GENERIC
+══════════════════════════════ */
+section{padding:80px 40px;position:relative;z-index:1}
+.sec-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--or);margin-bottom:10px;
+}
+.sec-label::before{content:'';width:22px;height:2px;background:var(--or)}
+.sec-title{
+  font-family:var(--ff-head);font-size:clamp(30px,4vw,46px);
+  font-weight:900;color:var(--wh);margin-bottom:48px;line-height:1.1;
+}
+
+/* ══════════════════════════════
+   TEAM SECTION
+══════════════════════════════ */
+.team-section{background:var(--dk2)}
+
+.row-label{
+  text-align:center;margin-bottom:26px;
+  font-size:10px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--tx2);
+  display:flex;align-items:center;justify-content:center;gap:14px;
+}
+.row-label::before,.row-label::after{content:'';flex:1;max-width:80px;height:1px;background:var(--bd)}
+
+/* ring animation */
+.ring-wrap{position:relative;flex-shrink:0}
+.ring-wrap::after{
+  content:'';position:absolute;inset:-5px;border-radius:50%;
+  background:conic-gradient(var(--or),var(--or2),var(--pu),var(--or));
+  z-index:0;animation:spin 6s linear infinite;
+}
+.ring-wrap.blue-ring::after{background:conic-gradient(var(--bl),#60A5FA,var(--gr),var(--bl))}
+.ring-wrap.purple-ring::after{background:conic-gradient(var(--pu),#C084FC,var(--or),var(--pu))}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.person-photo,.person-ph{
+  border-radius:50%;
+  border:5px solid var(--dk2);
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.person-photo{object-fit:cover;object-position:center 15%}
+.person-ph{background:linear-gradient(135deg,var(--sl),var(--dk3));font-size:inherit}
+
+.person-card{
+  display:flex;flex-direction:column;align-items:center;
+  gap:16px;animation:fadeUp .7s ease both;
+}
+.p-name{font-family:var(--ff-head);font-weight:700;color:var(--wh);text-align:center;line-height:1.2;margin-top:4px;}
+.p-role{font-size:12px;font-weight:600;padding:6px 20px;border-radius:30px;text-align:center;border:1px solid}
+.role-or{background:var(--or-dim);color:var(--or);border-color:rgba(249,115,22,.3)}
+.role-bl{background:rgba(59,130,246,.1);color:#60A5FA;border-color:rgba(59,130,246,.3)}
+.role-pu{background:rgba(168,85,247,.1);color:#C084FC;border-color:rgba(168,85,247,.3)}
+.p-dept{font-size:12.5px;color:var(--tx2);text-align:center;max-width:160px;line-height:1.5}
+
+/* sizing - MASSIVELY INCREASED SIZES */
+.sz-xl .person-photo,.sz-xl .person-ph{width:260px;height:260px;font-size:80px}
+.sz-lg .person-photo,.sz-lg .person-ph{width:220px;height:220px;font-size:70px}
+.sz-md .person-photo,.sz-md .person-ph{width:180px;height:180px;font-size:60px}
+.sz-xl .p-name{font-size:26px}
+.sz-lg .p-name{font-size:22px}
+.sz-md .p-name{font-size:18px}
+
+.mentors-row{
+  display:flex;justify-content:center;align-items:flex-start;
+  gap:clamp(40px,6vw,100px);
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  padding-bottom:12px;
+  margin-bottom:64px;
+  -webkit-overflow-scrolling:touch;
+}
+.mentors-row::-webkit-scrollbar{height:4px}
+.mentors-row::-webkit-scrollbar-track{background:var(--dk3)}
+.mentors-row::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+.team-row{
+  display:flex;justify-content:center;align-items:flex-start;
+  gap:clamp(24px,4vw,60px);
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  padding-bottom:12px;
+  margin-bottom:52px;
+  -webkit-overflow-scrolling:touch;
+}
+.team-row::-webkit-scrollbar{height:4px}
+.team-row::-webkit-scrollbar-track{background:var(--dk3)}
+.team-row::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+/* stagger */
+.person-card:nth-child(1){animation-delay:.05s}
+.person-card:nth-child(2){animation-delay:.12s}
+.person-card:nth-child(3){animation-delay:.19s}
+.person-card:nth-child(4){animation-delay:.26s}
+.person-card:nth-child(5){animation-delay:.33s}
+
+/* ══════════════════════════════
+   KEYNOTE / NOTE BOX
+══════════════════════════════ */
+.keynote-wrap{max-width:100%;margin:0 auto}
+.keynote-card{
+  background:var(--dk3);border:1px solid var(--bd);
+  border-left:4px solid var(--or);border-radius:0 14px 14px 0;
+  padding:22px 28px;
+  display:flex;gap:16px;align-items:flex-start;
+}
+.kn-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.kn-body h4{font-family:var(--ff-head);font-size:15px;font-weight:700;color:var(--or);margin-bottom:6px}
+.kn-body p{font-size:13px;color:var(--tx2);line-height:1.7;margin-bottom:8px}
+.kn-body p:last-child{margin-bottom:0}
+.kn-body strong{color:var(--tx)}
+.kn-tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.kn-tag{
+  font-size:11px;font-weight:600;
+  padding:4px 12px;border-radius:20px;
+  background:var(--or-dim);color:var(--or);
+  border:1px solid rgba(249,115,22,.25);
+}
+.kn-tag.bl{background:rgba(59,130,246,.1);color:#60A5FA;border-color:rgba(59,130,246,.3)}
+.kn-tag.gr{background:rgba(34,197,94,.1);color:#4ADE80;border-color:rgba(34,197,94,.3)}
+
+/* ══════════════════════════════
+   STATS GRID
+══════════════════════════════ */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:48px}
+.stat-card{
+  background:var(--dk3);border:1px solid var(--bd);
+  border-radius:16px;padding:24px;
+  position:relative;overflow:hidden;
+  transition:transform .2s,border-color .2s;
+}
+.stat-card:hover{transform:translateY(-4px);border-color:var(--accent,var(--or))}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--or))}
+.sc-icon{font-size:26px;margin-bottom:12px}
+.sc-label{font-size:10px;font-weight:700;color:var(--tx2);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:5px}
+.sc-value{font-family:var(--ff-head);font-size:22px;font-weight:900;color:var(--wh)}
+.sc-sub{font-size:11px;color:var(--tx2);margin-top:4px}
+
+/* ══════════════════════════════
+   FEATURES
+══════════════════════════════ */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.feat-card{
+  background:var(--dk3);border:1px solid var(--bd);
+  border-radius:16px;padding:26px;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.feat-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,var(--glow,rgba(249,115,22,.06)),transparent 60%);
+  pointer-events:none;
+}
+.feat-card:hover{transform:translateY(-6px);border-color:var(--accent,var(--or));box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.fi{font-size:30px;margin-bottom:14px}
+.ft{font-family:var(--ff-head);font-size:17px;font-weight:700;color:var(--wh);margin-bottom:7px}
+.fd{font-size:13px;color:var(--tx2);line-height:1.65}
+
+/* ══════════════════════════════
+   TECH PILLS
+══════════════════════════════ */
+.tech-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tech-pill{
+  display:flex;align-items:center;gap:7px;
+  background:var(--dk3);border:1px solid var(--bd);
+  padding:9px 18px;border-radius:40px;
+  font-size:12.5px;font-weight:600;color:var(--tx);
+  transition:all .2s;
+}
+.tech-pill:hover{border-color:var(--or);color:var(--or);transform:scale(1.05)}
+.tp-dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--or));flex-shrink:0}
+
+/* ══════════════════════════════
+   PORT CARDS
+══════════════════════════════ */
+.ports-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:48px}
+.port-card{
+  border-radius:16px;padding:22px;text-align:center;
+  border:1px solid;transition:transform .2s;
+}
+.port-card:hover{transform:scale(1.04)}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+footer{
+  background:var(--dk2);border-top:1px solid var(--bd);
+  padding:40px 40px;text-align:center;
+}
+.f-logo{font-family:var(--ff-head);font-size:30px;font-weight:900;margin-bottom:8px}
+.f-logo span{color:var(--or)}
+footer p{font-size:13px;color:var(--tx2)}
+
+/* ══════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:768px){
+  .top-strip{padding:12px 18px}
+  section{padding:56px 18px}
+  .hero{padding:80px 18px 48px}
+  .divider{margin:0 18px}
+  .mentors-row,.team-row{justify-content:flex-start;padding-left:18px;padding-right:18px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     TOP STRIP
+══════════════════════════════ -->
+<header class="top-strip">
+  <div class="college-brand">
+    <img src="images/college-logo.png" alt="GCET Logo" class="college-logo"
+         onerror="this.style.display='none';document.querySelector('.college-logo-ph').style.display='flex'">
+    <div class="college-logo-ph">🎓</div>
+    <div class="college-info">
+      <h1>Gayatri College of Engineering &amp; Technology</h1>
+      <p>Berhampur, Ganjam, Odisha &nbsp;|&nbsp; Ambapua, Brahmapur, Odisha — 760010</p>
+    </div>
+  </div>
+  <div class="proj-badge">
+    <span>🍔</span>
+    <span>B.Tech 6th Semester — Minor Project 2026</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+
+  <div class="hero-eyebrow">
+    <span>🚀</span>
+    <span>Full-Stack Web Application &nbsp;•&nbsp; Docker &nbsp;•&nbsp; Real-Time</span>
+  </div>
+
+  <p class="hero-welcome">Welcome to</p>
+
+  <h1 class="hero-title">
+    <div class="w1">Food</div>
+    <div class="w2">Rush</div>
+  </h1>
+
+  <p class="hero-tagline">"Berhampur's hunger, answered in minutes."</p>
+
+  <p class="hero-sub">
+    A complete food delivery ecosystem — connecting customers, restaurants,
+    delivery partners &amp; administrators through three role-based portals
+    powered by Node.js, React, MongoDB &amp; Socket.io.
+  </p>
+
+  <div class="hero-cta-row">
+    <a href="#team" class="btn-or">👥 Meet the Team</a>
+    <a href="#features" class="btn-ghost">Explore Features →</a>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════
+     TEAM SECTION
+══════════════════════════════ -->
+<section class="team-section" id="team">
+  <div style="text-align:center;margin-bottom:52px">
+    <div class="sec-label" style="justify-content:center">Project Team</div>
+    <h2 class="sec-title" style="margin-bottom:0">The People Behind FoodRush</h2>
+    <p style="color:var(--tx2);font-size:14px;margin-top:10px">Gayatri College of Engineering &amp; Technology, Berhampur — B.Tech CSE 2024</p>
+  </div>
+
+  <!-- ROW 1: HOD | PRINCIPAL | GUIDE -->
+  <div class="row-label">Under the Patronage of &amp; Project Mentors</div>
+  <div class="mentors-row reveal">
+
+    <!-- HOD -->
+    <div class="person-card sz-lg">
+      <div class="ring-wrap blue-ring">
+        <img src="images/hod.jpg" alt="HOD" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👩‍🏫</div>
+      </div>
+      <div class="p-name">Ms. Sunita Nanda</div>
+      <div class="p-role role-bl">Head of Department</div>
+      <div class="p-dept">Dept. of Computer Science &amp; Project approval</div>
+    </div>
+
+    <!-- PRINCIPAL (biggest) -->
+    <div class="person-card sz-xl">
+      <div class="ring-wrap">
+        <img src="images/principal.jpg" alt="Principal" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👨‍💼</div>
+      </div>
+      <div class="p-name">Mr. Ramachandra Panda</div>
+      <div class="p-role role-or">Principal</div>
+      <div class="p-dept">Gayatri College of Engineering &amp; Management and lebel</div>
+    </div>
+
+    <!-- GUIDE -->
+    <div class="person-card sz-lg">
+      <div class="ring-wrap blue-ring">
+        <img src="images/guide.jpg" alt="Guide" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👨‍🏫</div>
+      </div>
+      <div class="p-name">Mr. Santosh Kumar Pandit</div>
+      <div class="p-role role-bl">Project Guide</div>
+      <div class="p-dept">Asst. Professor — Dept. of CSE &amp; mentor</div>
+    </div>
+
+  </div>
+
+  <!-- ROW 2: 5 TEAM MEMBERS -->
+  <div class="row-label">Project Team Members</div>
+  <div class="team-row reveal">
+
+    <!-- KALU — Team Lead -->
+    <div class="person-card sz-md">
+      <div class="ring-wrap purple-ring">
+        <img src="images/member1.jpg" alt="Kalu" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👤</div>
+      </div>
+      <div class="p-name">Kalu Ch Sahu </div>
+      <div class="p-regno">Registration No.: 2421427083</div>
+      <div class="p-role role-pu">Team Lead &amp; Full-Stack</div>
+      <div class="p-dept">End-to-end technical ownership</div>
+    </div>
+
+    <!-- MEMBER 2 -->
+    <div class="person-card sz-md">
+      <div class="ring-wrap purple-ring">
+        <img src="images/member2.jpg" alt="Member 2" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👤</div>
+      </div>
+      <div class="p-name">Pitam bhatra</div>
+      <div class="p-regno">Registration No.: 2301427017</div>
+      <div class="p-role role-pu">End to end Testing</div>
+      <div class="p-dept">All end-to-end testing</div>
+    </div>
+
+    <!-- MEMBER 3 -->
+    <div class="person-card sz-md">
+      <div class="ring-wrap purple-ring">
+        <img src="images/member3.jpg" alt="Member 3" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👤</div>
+      </div>
+      <div class="p-name">Rahul Gouda</div>
+      <div class="p-regno">Registration No.: 2421427091</div>
+      <div class="p-role role-pu">Introduction</div>
+      <div class="p-dept">Project Overview</div>
+    </div>
+
+    <!-- MEMBER 4 -->
+    <div class="person-card sz-md">
+      <div class="ring-wrap purple-ring">
+        <img src="images/member4.jpg" alt="Member 4" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👤</div>
+      </div>
+      <div class="p-name">Himansu Sekhar Swain</div>
+      <div class="p-regno">Registration No.: 2421427078</div>
+      <div class="p-role role-pu">System requirements</div>
+      <div class="p-dept">Hardware and Software Requirements</div>
+    </div>
+
+    <!-- MEMBER 5 -->
+    <div class="person-card sz-md">
+      <div class="ring-wrap purple-ring">
+        <img src="images/member5.jpg" alt="Member 5" class="person-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="person-ph" style="display:none;">👤</div>
+      </div>
+      <div class="p-name">D. Prakash ch patra</div>
+      <div class="p-regno">Registration No.: 2421427072</div>
+      <div class="p-role role-pu">Project Documentation</div>
+      <div class="p-dept">ER Diagram</div>
+    </div>
+
+  </div>
+
+  <!-- KEYNOTE -->
+  <div class="keynote-wrap reveal">
+    <div class="keynote-card">
+      <div class="kn-icon">📌</div>
+      <div class="kn-body">
+        <h4>Project Keynote</h4>
+        <p>
+          <strong>FoodRush</strong> is a real-world food delivery platform built specifically for <strong>Berhampur, Odisha</strong>, 
+          connecting local restaurants, customers, and delivery partners through three isolated role-based portals. 
+          The system is fully containerised with Docker and supports real-time order flow via Socket.io.
+        </p>
+        <p>
+          <strong>Kalu Ch Sahu</strong> (Team Lead) is solely responsible for end-to-end technical delivery — 
+          system architecture, full-stack development, Docker orchestration, database design, real-time integration, 
+          and deployment pipeline. Members 2–5 names, photos, and roles will be updated before final submission.
+        </p>
+        <div class="kn-tag-row">
+          <span class="kn-tag">🔥 Real-Time Orders</span>
+          <span class="kn-tag">🐳 Docker Deployed</span>
+          <span class="kn-tag bl">⚛️ React + Node.js</span>
+          <span class="kn-tag bl">🍃 MongoDB</span>
+          <span class="kn-tag gr">✅ Static Presentation</span>
+          <span class="kn-tag gr">📸 Photos TBA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════
+     STATS
+══════════════════════════════ -->
+<section>
+  <div class="sec-label">By the Numbers</div>
+  <h2 class="sec-title">Project at a Glance</h2>
+  <div class="stats-grid reveal">
+    <div class="stat-card" style="--accent:#F97316">
+      <div class="sc-icon">🍽️</div>
+      <div class="sc-label">Restaurants</div>
+      <div class="sc-value">20+</div>
+      <div class="sc-sub">Berhampur, Ganjam area</div>
+    </div>
+    <div class="stat-card" style="--accent:#22C55E">
+      <div class="sc-icon">📋</div>
+      <div class="sc-label">Menu Items</div>
+      <div class="sc-value">50+</div>
+      <div class="sc-sub">Veg &amp; Non-Veg categories</div>
+    </div>
+    <div class="stat-card" style="--accent:#3B82F6">
+      <div class="sc-icon">🐳</div>
+      <div class="sc-label">Docker Services</div>
+      <div class="sc-value">5</div>
+      <div class="sc-sub">MongoDB, API, 3 Frontends</div>
+    </div>
+    <div class="stat-card" style="--accent:#A855F7">
+      <div class="sc-icon">⚡</div>
+      <div class="sc-label">Real-Time Events</div>
+      <div class="sc-value">Socket.io</div>
+      <div class="sc-sub">Instant order notifications</div>
+    </div>
+    <div class="stat-card" style="--accent:#EC4899">
+      <div class="sc-icon">🔒</div>
+      <div class="sc-label">Portals</div>
+      <div class="sc-value">3</div>
+      <div class="sc-sub">Customer, Delivery, Admin</div>
+    </div>
+    <div class="stat-card" style="--accent:#F59E0B">
+      <div class="sc-icon">📁</div>
+      <div class="sc-label">Source Files</div>
+      <div class="sc-value">98+</div>
+      <div class="sc-sub">GitHub: sahukalu/foodrush</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════
+     PORT MAP
+══════════════════════════════ -->
+<section style="background:var(--dk2)">
+  <div class="sec-label">Access Points</div>
+  <h2 class="sec-title">Three Portals, Three Ports</h2>
+  <div class="ports-row reveal">
+    <div class="port-card" style="background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.3)">
+      <div style="font-size:36px;margin-bottom:10px">🛍️</div>
+      <div style="font-family:var(--ff-mono);font-size:20px;font-weight:600;color:#22C55E;margin-bottom:7px">localhost:3010</div>
+      <div style="font-size:15px;font-weight:700;color:var(--wh);margin-bottom:6px">Customer Portal</div>
+      <div style="font-size:12px;color:var(--tx2)">Browse restaurants • Add to cart • Place order • Track live</div>
+    </div>
+    <div class="port-card" style="background:rgba(249,115,22,.07);border-color:rgba(249,115,22,.3)">
+      <div style="font-size:36px;margin-bottom:10px">🔐</div>
+      <div style="font-family:var(--ff-mono);font-size:20px;font-weight:600;color:#F97316;margin-bottom:7px">localhost:3011</div>
+      <div style="font-size:15px;font-weight:700;color:var(--wh);margin-bottom:6px">Admin Panel</div>
+      <div style="font-size:12px;color:var(--tx2)">Full control • Restaurants • Users • Orders • Live stats</div>
+    </div>
+    <div class="port-card" style="background:rgba(168,85,247,.07);border-color:rgba(168,85,247,.3)">
+      <div style="font-size:36px;margin-bottom:10px">🛵</div>
+      <div style="font-family:var(--ff-mono);font-size:20px;font-weight:600;color:#A855F7;margin-bottom:7px">localhost:3020</div>
+      <div style="font-size:15px;font-weight:700;color:var(--wh);margin-bottom:6px">Delivery Portal</div>
+      <div style="font-size:12px;color:var(--tx2)">Real-time alerts • Accept orders • Mark delivered • Earn</div>
+    </div>
+    <div class="port-card" style="background:rgba(59,130,246,.07);border-color:rgba(59,130,246,.3)">
+      <div style="font-size:36px;margin-bottom:10px">⚙️</div>
+      <div style="font-family:var(--ff-mono);font-size:20px;font-weight:600;color:#3B82F6;margin-bottom:7px">localhost:5001</div>
+      <div style="font-size:15px;font-weight:700;color:var(--wh);margin-bottom:6px">Backend API</div>
+      <div style="font-size:12px;color:var(--tx2)">Node.js + Express • REST API • Socket.io • JWT Auth</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════
+     FEATURES
+══════════════════════════════ -->
+<section id="features">
+  <div class="sec-label">Capabilities</div>
+  <h2 class="sec-title">Key Features</h2>
+  <div class="feat-grid reveal">
+    <div class="feat-card" style="--accent:#F97316;--glow:rgba(249,115,22,.06)">
+      <div class="fi">🔔</div>
+      <div class="ft">Real-Time Notifications</div>
+      <div class="fd">When a customer places an order, all online delivery partners are notified instantly via Socket.io. First to accept wins — race condition handled server-side.</div>
+    </div>
+    <div class="feat-card" style="--accent:#22C55E;--glow:rgba(34,197,94,.06)">
+      <div class="fi">🌿</div>
+      <div class="ft">Veg / Non-Veg Filter</div>
+      <div class="fd">Every dish is tagged. Customers can filter by Veg only, Non-Veg, Swiggy/Zomato availability, and cuisine type for a personalised browsing experience.</div>
+    </div>
+    <div class="feat-card" style="--accent:#3B82F6;--glow:rgba(59,130,246,.06)">
+      <div class="fi">🔒</div>
+      <div class="ft">Role-Based Security</div>
+      <div class="fd">Three completely isolated portals on separate ports. JWT tokens per role. Customers cannot access the admin panel; delivery partners are redirected if they visit the wrong portal.</div>
+    </div>
+    <div class="feat-card" style="--accent:#A855F7;--glow:rgba(168,85,247,.06)">
+      <div class="fi">🐳</div>
+      <div class="ft">One-Command Docker Deploy</div>
+      <div class="fd">The entire system — 5 services — starts with <code style="background:var(--dk);padding:2px 6px;border-radius:4px;font-family:var(--ff-mono);font-size:11px">docker-compose up --build</code>. MongoDB health checks ensure safe startup ordering.</div>
+    </div>
+    <div class="feat-card" style="--accent:#EC4899;--glow:rgba(236,72,153,.06)">
+      <div class="fi">📸</div>
+      <div class="ft">Image Management</div>
+      <div class="fd">Admin can upload restaurant and dish photos. Images are stored in Docker volumes, served by the backend. Unsplash fallback images included for all 20 seeded restaurants.</div>
+    </div>
+    <div class="feat-card" style="--accent:#F59E0B;--glow:rgba(245,158,11,.06)">
+      <div class="fi">🏪</div>
+      <div class="ft">20 Berhampur Restaurants</div>
+      <div class="fd">Hotel Kalinga, Udupi Bhavan, Mughal Darbar, Pizza Point, Street Bites and 15 more local restaurants pre-seeded automatically on first boot.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════
+     TECH STACK
+══════════════════════════════ -->
+<section style="background:var(--dk2);text-align:center">
+  <div class="sec-label" style="justify-content:center">Built With</div>
+  <h2 class="sec-title" style="margin-bottom:40px">Technology Stack</h2>
+  <div class="tech-pills reveal">
+    <div class="tech-pill"><span class="tp-dot" style="--c:#61DAFB"></span>React.js 18</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#68A063"></span>Node.js 20</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#4FAA41"></span>Express.js</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#47A248"></span>MongoDB 7</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#010101"></span>Socket.io</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#646CFF"></span>Vite</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#009639"></span>Nginx</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#2496ED"></span>Docker</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#E10098"></span>JWT Auth</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#F97316"></span>Multer</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#181717"></span>GitHub</div>
+    <div class="tech-pill"><span class="tp-dot" style="--c:#8E44AD"></span>Bcrypt</div>
+  </div>
+
+  <div style="margin-top:48px;display:inline-block;background:var(--dk3);border:1px solid var(--bd);border-radius:16px;padding:22px 38px">
+    <div style="font-size:11px;color:var(--tx2);margin-bottom:7px;letter-spacing:1.2px;text-transform:uppercase">GitHub Repository</div>
+    <a href="https://github.com/sahukalu/foodrush-delivery-app" target="_blank"
+       style="font-family:var(--ff-mono);font-size:15px;color:var(--or);text-decoration:none;font-weight:600">
+      github.com/sahukalu/foodrush-delivery-app
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer>
+  <div class="f-logo">Food<span>Rush</span></div>
+  <p style="margin-bottom:5px">Gayatri College of Engineering &amp; Technology, Berhampur</p>
+  <p style="margin-bottom:5px">Department of Computer Science &amp; Engineering</p>
+  <p style="color:var(--or);font-weight:600;margin-top:12px">Presented by Kalu Ch Sahu &nbsp;•&nbsp; B.Tech 2024</p>
+</footer>
+
+<!-- ══════════════════════════════
+     SCRIPTS
+══════════════════════════════ -->
+<script>
+/* Scroll reveal */
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Stagger person cards */
+document.querySelectorAll('.person-card').forEach((c, i) => {
+  c.style.animationDelay = `${i * 0.11}s`;
+});
+</script>
+</body>
+</html>
